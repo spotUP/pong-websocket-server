@@ -134,7 +134,7 @@ class PongWebSocketServer {
 
         <div class="endpoint">
             <strong>WebSocket Endpoint:</strong><br>
-            wss://pong-websocket-server-1.onrender.com/ws
+            wss://pong-websocket-server-1.onrender.com
         </div>
 
         <div class="endpoint">
@@ -190,7 +190,7 @@ class PongWebSocketServer {
       }
     });
 
-    this.wss = new WebSocketServer({ server: this.server, path: '/ws' });
+    this.wss = new WebSocketServer({ server: this.server });
     this.setupWebSocketHandlers();
     this.startCleanupInterval();
   }
