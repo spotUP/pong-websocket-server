@@ -57,8 +57,20 @@ class PongWebSocketServer {
     this.port = port || parseInt(process.env.PORT || '3002');
     this.server = createServer();
 
-    // Add health check endpoint
+    // Add health check endpoint with CORS headers
     this.server.on('request', (req: IncomingMessage, res: ServerResponse) => {
+      // Add CORS headers for all requests
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+      // Handle preflight requests
+      if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+      }
+
       if (req.url === '/health') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
