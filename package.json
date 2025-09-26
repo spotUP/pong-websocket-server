@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "ws": "^8.14.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "@types/node": "^20.8.0",
+    "@types/ws": "^8.5.8"
   },
   "devDependencies": {
-    "@types/node": "^20.8.0",
-    "@types/ws": "^8.5.8",
     "tsx": "^3.14.0"
   },
   "engines": {
