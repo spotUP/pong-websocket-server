@@ -1,0 +1,25 @@
+{
+  "name": "pong-websocket-server",
+  "version": "1.0.0",
+  "description": "Production WebSocket server for RetroRanks Pong multiplayer",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "postinstall": "npm run build"
+  },
+  "dependencies": {
+    "ws": "^8.14.2",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/ws": "^8.5.8",
+    "tsx": "^3.14.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
