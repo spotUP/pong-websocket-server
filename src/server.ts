@@ -78,9 +78,115 @@ class PongWebSocketServer {
           timestamp: new Date().toISOString(),
           stats: this.getStats()
         }));
+      } else if (req.url === '/') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏓 Pong WebSocket Server</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a0b3d, #2d1b5e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 { font-size: 3rem; margin-bottom: 1rem; color: #ff006e; }
+        .status { color: #00ff88; font-size: 1.2rem; margin: 1rem 0; }
+        .stats { margin: 2rem 0; }
+        .stat-item { margin: 0.5rem 0; font-size: 1.1rem; }
+        .endpoint {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+        .footer { margin-top: 2rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏓 PONG SERVER</h1>
+        <div class="status">✅ Server Online & Ready</div>
+
+        <div class="stats">
+            <div class="stat-item">🎮 Active Rooms: ${this.rooms.size}</div>
+            <div class="stat-item">👥 Connected Players: ${this.players.size}</div>
+            <div class="stat-item">⏰ Server Time: ${new Date().toLocaleString()}</div>
+        </div>
+
+        <div class="endpoint">
+            <strong>WebSocket Endpoint:</strong><br>
+            wss://pong-websocket-server-1.onrender.com/ws
+        </div>
+
+        <div class="endpoint">
+            <strong>Health Check:</strong><br>
+            <a href="/health" style="color: #00ff88;">/health</a>
+        </div>
+
+        <div class="footer">
+            <p>Multiplayer Pong WebSocket Server</p>
+            <p>Ready for real-time gaming! 🚀</p>
+        </div>
+    </div>
+</body>
+</html>
+        `);
       } else {
-        res.writeHead(404);
-        res.end();
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Not Found</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a0b3d, #2d1b5e);
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { max-width: 500px; }
+        h1 { font-size: 4rem; color: #ff006e; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; margin: 1rem 0; }
+        a { color: #00ff88; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>🏓 Endpoint not found!</p>
+        <p><a href="/">← Back to Server Status</a></p>
+    </div>
+</body>
+</html>
+        `);
       }
     });
 
