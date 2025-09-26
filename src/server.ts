@@ -84,7 +84,7 @@ class PongWebSocketServer {
       }
     });
 
-    this.wss = new WebSocketServer({ server: this.server });
+    this.wss = new WebSocketServer({ server: this.server, path: '/ws' });
     this.setupWebSocketHandlers();
     this.startCleanupInterval();
   }
