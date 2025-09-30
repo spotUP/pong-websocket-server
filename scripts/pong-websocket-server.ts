@@ -1361,9 +1361,14 @@ class PongWebSocketServer {
 
       // Store target if not exists or recalculate if ball direction/position changed significantly
       if (!paddle.targetPos || Math.abs(paddle.lastPredictedPos - predictedPos) > 20) {
-        // Increased imperfection for more variety and mistakes
-        const imperfection = (Math.random() - 0.5) * 40; // Increased from 10 to 40
-        paddle.targetPos = predictedPos + imperfection - (paddleSize / 2);
+        // Add large imperfection to prevent AI loops
+        const imperfection = (Math.random() - 0.5) * 80; // Increased from 40 to 80 for more variety
+
+        // 20% chance AI makes a significant mistake (helps break loops)
+        const makeMistake = Math.random() < 0.2;
+        const mistakeOffset = makeMistake ? (Math.random() - 0.5) * 150 : 0;
+
+        paddle.targetPos = predictedPos + imperfection + mistakeOffset - (paddleSize / 2);
         paddle.lastPredictedPos = predictedPos;
       }
 
